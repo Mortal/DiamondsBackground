@@ -92,3 +92,37 @@ Run the demo by typing `./demoSingle2DGaussian`.
 
 ### Tutorials
 To run the tutorials provided in the package, please follow the guidelines presented in [tutorials/README.md](https://github.com/EnricoCorsaro/Background/blob/master/tutorials/README.md)
+
+### Tutorial - quick version (Linux)
+
+Here's the Linux shell commands you should run to follow the steps in the tutorial.
+Inside a fresh clone of this repository, run:
+
+```
+mkdir build &&
+cd build &&
+cmake -GNinja -DCMAKE_CXX_FLAGS=-fopenmp -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Release .. &&
+ninja &&
+echo $PWD/ > localPath.txt &&
+mkdir data &&
+cp ../tutorials/KIC012008916/KIC012008916.txt data &&
+mkdir results &&
+cp -rt results ../tutorials/KIC012008916 &&
+mkdir results/KIC012008916/00 &&
+./background KIC 012008916 00 ThreeHarvey background_hyperParameters 0.0 0
+```
+
+### Demo - quick version (Linux)
+
+Here's the Linux shell commands you should run to build the library and the demo.
+Inside a fresh clone of this repository, run:
+
+```
+mkdir build &&
+cd build &&
+cmake -GNinja -DCMAKE_CXX_FLAGS=-fopenmp -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Release .. &&
+ninja &&
+cd ../demos &&
+g++ -o demoSingle2DGaussian demoSingle2DGaussian.cpp -L../build -Wl,-rpath=$PWD/../build -I../include -ldiamonds -std=c++11 &&
+./demoSingle2DGaussian
+```
