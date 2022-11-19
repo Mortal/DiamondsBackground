@@ -53,7 +53,7 @@ NestedSampler::NestedSampler(const bool printOnTheScreen, const int initialNlive
 
     Ndimensions = 0;
     
-    for (int i = 0; i < ptrPriors.size(); i++)
+    for (int i = 0; i < (int)ptrPriors.size(); i++)
     {
         // Get the number of dimensions from each type of prior
 
@@ -202,7 +202,7 @@ void NestedSampler::run(LivePointsReducer &livePointsReducer, const int Ninitial
     int NdimensionsOfCurrentPrior;
     ArrayXXd priorSample;
 
-    for (int i = 0; i < ptrPriors.size(); i++)
+    for (int i = 0; i < (int)ptrPriors.size(); i++)
     {
         // Some priors cover one particalar coordinate, others may cover two or more coordinates
         // Find out how many dimensions the current prior covers.
@@ -340,7 +340,7 @@ void NestedSampler::run(LivePointsReducer &livePointsReducer, const int Ninitial
             // the island(s) of high likelihood. Clusters found in the first N initial iterations are
             // therefore likely purely noise.
             
-            if (Niterations > NinitialIterationsWithoutClustering)
+            if ((int)Niterations > NinitialIterationsWithoutClustering)
             {
                 // After the first N initial iterations, we do a proper clustering.
                 
@@ -502,7 +502,7 @@ void NestedSampler::run(LivePointsReducer &livePointsReducer, const int Ninitial
         }
         else
         {   
-            nestedSamplingShouldContinue = (Niterations <= maxNiterations);
+            nestedSamplingShouldContinue = ((int)Niterations <= maxNiterations);
         }
 
         

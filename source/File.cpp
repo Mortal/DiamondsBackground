@@ -134,7 +134,7 @@ ArrayXXd File::arrayXXdFromFile(ifstream &inputFile, const unsigned long Nrows, 
         // Check if the number of numbers on the line matches the expected
         // number of columns
         
-        if (tokens.size() != Ncols)
+        if (tokens.size() != (size_t)Ncols)
         {
             cerr << "Error on row " << iRow << ": number of tokens != " 
                  << Ncols << endl;

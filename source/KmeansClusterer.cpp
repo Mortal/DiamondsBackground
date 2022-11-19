@@ -107,14 +107,14 @@ void KmeansClusterer::chooseInitialClusterCenters(RefArrayXXd sample, RefArrayXX
     
     // Select the other initial centers probabilistically 
 
-    for (int n = 1; n < Nclusters; ++n)
+    for (int n = 1; n < (int)Nclusters; ++n)
     {
         // For each of the points in the sample, determine the distance to
         // its closest center 
     
         sumOfDistancesToClosestCenters = 0.0;
     
-        for (int k = 0; k < Npoints; ++k)
+        for (int k = 0; k < (int)Npoints; ++k)
         {
             for (int j = 0; j < n; ++j)
             {
@@ -145,7 +145,7 @@ void KmeansClusterer::chooseInitialClusterCenters(RefArrayXXd sample, RefArrayXX
 
         // Normalize the distances
     
-        for (int k = 0; k < Npoints; ++k)
+        for (int k = 0; k < (int)Npoints; ++k)
         { 
             distanceToClosestCenter[k] /= sumOfDistancesToClosestCenters;
         }
@@ -238,11 +238,12 @@ bool KmeansClusterer::updateClusterCentersUntilConverged(RefArrayXXd sample, Ref
         clusterSizes.setZero();
         updatedCenters.setZero();
     
-        for (int n = 0; n < Npoints; ++n)
+        for (int n = 0; n < (int)Npoints; ++n)
         {
+            indexOfClosestCenter = 0;
             distanceToClosestCenter = numeric_limits<double>::max();
         
-            for (int i = 0; i < Nclusters; ++i)
+            for (int i = 0; i < (int)Nclusters; ++i)
             {
                 distance = metric.distance(sample.col(n), centers.col(i));
                 
@@ -356,7 +357,7 @@ double KmeansClusterer::evaluateBICvalue(RefArrayXXd sample, RefArrayXXd centers
     ArrayXd intraClusterVariances(Nclusters);
     intraClusterVariances.setZero();
     
-    for (int n = 0; n < Npoints; ++n)
+    for (int n = 0; n < (int)Npoints; ++n)
     {
         intraClusterVariances(clusterIndices[n]) += metric.distance(sample.col(n), centers.col(clusterIndices[n]));
     }
@@ -377,7 +378,7 @@ double KmeansClusterer::evaluateBICvalue(RefArrayXXd sample, RefArrayXXd centers
     double logLikelihood = 0.0;
     int cluster;
 
-    for (int n = 0; n < Npoints; ++n)
+    for (int n = 0; n < (int)Npoints; ++n)
     {
         cluster = clusterIndices[n]; 
         logLikelihood +=   log(clusterPriors(cluster))
@@ -488,7 +489,7 @@ int KmeansClusterer::cluster(RefArrayXXd sample, vector<int> &optimalClusterIndi
         bestSumOfDistancesToClosestCenter = numeric_limits<double>::max();
         
                     
-        for (int m = 0; m < Ntrials; ++m)
+        for (int m = 0; m < (int)Ntrials; ++m)
         {
             chooseInitialClusterCenters(optimizedSample, centers);
             convergedSuccessfully = updateClusterCentersUntilConverged(optimizedSample, centers, clusterSizes, clusterIndices, 
@@ -533,7 +534,7 @@ int KmeansClusterer::cluster(RefArrayXXd sample, vector<int> &optimalClusterIndi
                 optimalNclusters = Nclusters;
                 optimalClusterIndices = bestClusterIndices;
                 optimalClusterSizes.resize(Nclusters);
-                for (int n = 0; n < Nclusters; ++n)
+                for (int n = 0; n < (int)Nclusters; ++n)
                 {
                     optimalClusterSizes[n] = bestClusterSizes(n);
                 }
@@ -547,7 +548,7 @@ int KmeansClusterer::cluster(RefArrayXXd sample, vector<int> &optimalClusterIndi
             optimalNclusters = Nclusters;
             optimalClusterIndices = bestClusterIndices;
             optimalClusterSizes.resize(Nclusters);
-            for (int n = 0; n < Nclusters; ++n)
+            for (int n = 0; n < (int)Nclusters; ++n)
             {
                 optimalClusterSizes[n] = bestClusterSizes(n);
             }

@@ -742,9 +742,9 @@ void Functions::sortElementsDouble(RefArrayXd array1, RefArrayXd array2)
 
 void Functions::sortElementsInt(vector<int> &array1, RefArrayXd array2)
 {
-    for (int i = 0; i < array1.size(); i++)
+    for (int i = 0; i < (int)array1.size(); i++)
     {
-        for (int j = 1; j < (array1.size()-i); j++)
+        for (int j = 1; j < ((int)array1.size()-i); j++)
         {
             if (array1[j-1] > array1[j])
             {

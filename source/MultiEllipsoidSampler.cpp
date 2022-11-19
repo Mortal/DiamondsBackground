@@ -92,7 +92,7 @@ bool MultiEllipsoidSampler::drawWithConstraint(const RefArrayXXd totalSample, co
                                                const vector<int> &clusterSizes, RefArrayXd drawnPoint, 
                                                double &logLikelihoodOfDrawnPoint, const int maxNdrawAttempts)
 {    
-    assert(totalSample.cols() == clusterIndices.size());
+    assert((size_t)totalSample.cols() == clusterIndices.size());
     assert(drawnPoint.size() == totalSample.rows());
     assert(Nclusters > 0);
 
@@ -226,7 +226,7 @@ bool MultiEllipsoidSampler::drawWithConstraint(const RefArrayXXd totalSample, co
         
         int beginIndex = 0;
 
-        for (int priorIndex = 0; priorIndex < ptrPriors.size(); ++priorIndex)
+        for (int priorIndex = 0; priorIndex < (int)ptrPriors.size(); ++priorIndex)
         {
             // Figure out the number of parameters (=coordinates) that the current prior covers
 
@@ -352,7 +352,7 @@ bool MultiEllipsoidSampler::verifySamplerStatus()
 void MultiEllipsoidSampler::computeEllipsoids(RefArrayXXd const totalSample, const unsigned int Nclusters, 
                                               const vector<int> &clusterIndices, const vector<int> &clusterSizes)
 {
-    assert(totalSample.cols() == clusterIndices.size());
+    assert((size_t)totalSample.cols() == clusterIndices.size());
     assert(totalSample.cols() >= Ndimensions + 1);            // At least Ndimensions + 1 points are required to start.
 
 
@@ -374,11 +374,11 @@ void MultiEllipsoidSampler::computeEllipsoids(RefArrayXXd const totalSample, con
 
     // Create an Ellipsoid for each cluster (provided it's large enough)
 
-    for (int i = 0; i < Nclusters; i++)
+    for (int i = 0; i < (int)Nclusters; i++)
     {   
         // Skip cluster if number of points is not large enough
 
-        if (clusterSizes[i] < Ndimensions + 1) 
+        if (clusterSizes[i] < (int)Ndimensions + 1) 
         {
             // Move the beginIndex up to the next cluster
 

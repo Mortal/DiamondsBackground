@@ -216,7 +216,7 @@ ArrayXd Results::computeCredibleLimits(const double credibleLevel, const double 
 
     vector<int> selectedIndices = Functions::findArrayIndicesWithinBoundaries(marginalDistributionInterpolated, -1e99, -1e-99);
     
-    for (int i = 0; i < selectedIndices.size(); ++i)
+    for (int i = 0; i < (int)selectedIndices.size(); ++i)
     {
         marginalDistributionInterpolated(selectedIndices[i]) = 0.0;
     }

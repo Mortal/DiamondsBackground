@@ -110,14 +110,14 @@ void GaussianMixtureClusterer::chooseInitialClusterCenters(RefArrayXXd sample)
     
     // Select the other initial centers probabilistically 
 
-    for (int n = 1; n < Nclusters; ++n)
+    for (int n = 1; n < (int)Nclusters; ++n)
     {
         // For each of the points in the sample, determine the distance to
         // its closest center 
     
         sumOfDistancesToClosestCenters = 0.0;
     
-        for (int k = 0; k < Npoints; ++k)
+        for (int k = 0; k < (int)Npoints; ++k)
         {
             for (int j = 0; j < n; ++j)
             {
@@ -148,7 +148,7 @@ void GaussianMixtureClusterer::chooseInitialClusterCenters(RefArrayXXd sample)
 
         // Normalize the distances
     
-        for (int k = 0; k < Npoints; ++k)
+        for (int k = 0; k < (int)Npoints; ++k)
         { 
             distanceToClosestCenter[k] /= sumOfDistancesToClosestCenters;
         }
@@ -205,7 +205,7 @@ void GaussianMixtureClusterer::chooseInitialClusterCovarianceMatrices(RefArrayXX
 {
     double biasFactor = 1.0/(Npoints-1.0);
 
-    for (int i = 0; i < Nclusters; i++)
+    for (int i = 0; i < (int)Nclusters; i++)
     {
         differenceFromCenters.block(0,i*Npoints,Ndimensions,Npoints) = sample.colwise() - centers.col(i);
 
@@ -249,7 +249,7 @@ void GaussianMixtureClusterer::computeGaussianMixtureModel(RefArrayXXd sample)
     modelProbability.setZero();
     ArrayXXd argument(Npoints, Npoints);
 
-    for (int i = 0; i < Nclusters; i++)
+    for (int i = 0; i < (int)Nclusters; i++)
     {
         argument = differenceFromCenters.block(0, i*Npoints,Ndimensions, Npoints).matrix().transpose() * 
                             inverseOfCovarianceMatrices.block(0, i*Ndimensions,Ndimensions, Ndimensions).matrix() * 
@@ -327,7 +327,7 @@ bool GaussianMixtureClusterer::updateClustersUntilConverged(RefArrayXXd optimize
 
         // Update the covariance matrices for each cluster
 
-        for (int i = 0; i < Nclusters; i++)
+        for (int i = 0; i < (int)Nclusters; i++)
         {
             differenceFromCenters.block(0,i*Npoints,Ndimensions, Npoints) = optimizedSample.colwise() - centers.col(i);
 
@@ -416,7 +416,7 @@ bool GaussianMixtureClusterer::searchForEmptyClusters()
     ArrayXi clusterNumberOfPoints(Nclusters);
     clusterNumberOfPoints.setZero();
 
-    for (int i = 0; i < Npoints; ++i)
+    for (int i = 0; i < (int)Npoints; ++i)
     {
         maxAssignmentProbability = assignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
         clusterNumberOfPoints(maxIndexOfCluster)++;
@@ -466,7 +466,7 @@ void GaussianMixtureClusterer::obtainClusterMembership(vector<int> &optimalClust
     Index maxIndexOfCluster;        // Store subscript containing index of cluster
     double maxAssignmentProbability;
 
-    for (int i = 0; i < Npoints; ++i)
+    for (int i = 0; i < (int)Npoints; ++i)
     {
         maxAssignmentProbability = optimalAssignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
         optimalClusterIndices[i] = maxIndexOfCluster;
@@ -610,7 +610,7 @@ int GaussianMixtureClusterer::cluster(RefArrayXXd sample, vector<int> &optimalCl
         
         allClustersAreNotEmpty = false;     // Assume by default that at least one cluster having not enough points can exist
         
-        for (int m = 0; m < Ntrials; ++m)
+        for (int m = 0; m < (int)Ntrials; ++m)
         {
             // cout << "Number of trail: " << m << endl;
             chooseInitialClusterCenters(optimizedSample);
