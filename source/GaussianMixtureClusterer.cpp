@@ -411,14 +411,13 @@ bool GaussianMixtureClusterer::updateClustersUntilConverged(RefArrayXXd optimize
 bool GaussianMixtureClusterer::searchForEmptyClusters()
 {
     Index maxIndexOfCluster;        // Store subscript containing index of cluster
-    double maxAssignmentProbability;
     bool noEmptyClustersFound = true;
     ArrayXi clusterNumberOfPoints(Nclusters);
     clusterNumberOfPoints.setZero();
 
     for (int i = 0; i < (int)Npoints; ++i)
     {
-        maxAssignmentProbability = assignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
+        assignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
         clusterNumberOfPoints(maxIndexOfCluster)++;
     }
 
@@ -464,11 +463,10 @@ void GaussianMixtureClusterer::obtainClusterMembership(vector<int> &optimalClust
                                                         RefArrayXXd optimalAssignmentProbabilities)
 {
     Index maxIndexOfCluster;        // Store subscript containing index of cluster
-    double maxAssignmentProbability;
 
     for (int i = 0; i < (int)Npoints; ++i)
     {
-        maxAssignmentProbability = optimalAssignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
+        optimalAssignmentProbabilities.row(i).maxCoeff(&maxIndexOfCluster);
         optimalClusterIndices[i] = maxIndexOfCluster;
         optimalClusterSizes[maxIndexOfCluster]++;
     }
