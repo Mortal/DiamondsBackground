@@ -41,7 +41,7 @@ LINK_DIRECTORIES(${Diamonds_Dir}/build)
 
 # Specify the source files to be compiled
               
-file(GLOB sourceFiles ${Background_Dir}/source/*.cpp)
+file(GLOB sourceFiles ${Background_Dir}/source/background/*.cpp)
 
 # Set the compiler flags
 # First those common to both gcc and clang:
