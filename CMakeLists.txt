@@ -1,4 +1,4 @@
-# cmake file to build Background extension of Diamonds
+# cmake file to build Diamonds and the Background extension
 # 
 # Usage: ($ mkdir build)
 #        $ cd build
@@ -21,27 +21,17 @@ project(Background)
 
 cmake_minimum_required(VERSION 2.8)
 
-# Specify the location of the Background directory
-
-set(Background_Dir ${CMAKE_SOURCE_DIR})
-
-# Specify the location of the Diamonds directory
-
-get_filename_component(Parent_Dir ${Background_Dir}/ PATH)
-set(Diamonds_Dir ${Parent_Dir}/DIAMONDS)
 
 # Specify the location of the header files
 
-include_directories(${Background_Dir}/include)
-include_directories(${Diamonds_Dir}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Specify the location of the Diamonds library
-
-LINK_DIRECTORIES(${Diamonds_Dir}/build)
 
 # Specify the source files to be compiled
               
-file(GLOB sourceFiles ${Background_Dir}/source/background/*.cpp)
+file(GLOB diamondsFiles ${CMAKE_CURRENT_SOURCE_DIR}/source/diamonds/*.cpp)
+file(GLOB backgroundFiles ${CMAKE_CURRENT_SOURCE_DIR}/source/background/*.cpp)
+
 
 # Set the compiler flags
 # First those common to both gcc and clang:
@@ -58,9 +48,17 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 endif()
 
+# Create a shared library target
+
+add_library(diamonds SHARED ${diamondsFiles})
+
+# Install the library in the lib/ folder
+
+install(TARGETS diamonds LIBRARY DESTINATION ${CMAKE_SOURCE_DIR}/lib)
+
 # Create an executable target
 
-add_executable(background ${sourceFiles})
+add_executable(background ${backgroundFiles})
 
 # Link the executable with the Diamonds library
 
