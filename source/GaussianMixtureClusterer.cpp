@@ -529,7 +529,8 @@ int GaussianMixtureClusterer::cluster(RefArrayXXd sample, vector<int> &optimalCl
     bool convergedSuccessfully;
     bool noEmptyClustersFound;
     bool allClustersAreNotEmpty; 
-    unsigned int optimalNclusters;    
+    // initialize optimalNclusters to avoid compiler warning
+    unsigned int optimalNclusters = 0;
 
 
     // Best total model probability for a given number of clusters

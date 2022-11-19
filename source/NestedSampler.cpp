@@ -135,7 +135,8 @@ void NestedSampler::run(LivePointsReducer &livePointsReducer, const int Ninitial
                         string pathPrefix)
 {
     int startTime = time(0);
-    double logMeanLiveEvidence;
+    // initialize logMeanLiveEvidence to avoid a compiler warning
+    double logMeanLiveEvidence = 0.0;
     terminationFactor = minRatioOfRemainderToCurrentEvidence;
     outputPathPrefix = pathPrefix;
 

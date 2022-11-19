@@ -456,7 +456,8 @@ int KmeansClusterer::cluster(RefArrayXXd sample, vector<int> &optimalClusterIndi
     
     Ndimensions = optimizedSample.rows();
 
-    unsigned int optimalNclusters;    
+    // Initialize optimalNclusters to avoid compiler warning
+    unsigned int optimalNclusters = 0;
     double bestBICvalue = numeric_limits<double>::max();
     double BICvalue; 
     double sumOfDistancesToClosestCenter;
